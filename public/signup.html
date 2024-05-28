@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <form id="register-form">
+        <input type="text" placeholder="username" id="username" />
+        <input type="password" placeholder="password" id="password" />
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('register-form');
+
+        const usernameField = document.getElementById('username')
+        const passwordField = document.getElementById('password')
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault()
+
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    username: usernameField.value, 
+                    password: passwordField.value
+                })
+            })
+
+            const result = await response.json();
+            const { id } = result
+             console.log(id)
+             window.location.href = `http://localhost:4000/profile.html?userId=${id}`
+           // window.location.replace(``) //this is used to redirect to new url page
+            
+        })
+    </script>
+</body>
+</html>
